@@ -1,6 +1,6 @@
-package <%= group %>.infra;
+package <%=group%>.infra;
 
-import <%= group %>.domain.port.HardcodedAdapter;
+import <%=group%>.domain.port.HardcodedAdapter;
 import java.util.Arrays;
 import java.util.List;
 

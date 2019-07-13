@@ -1,8 +1,8 @@
-package <%= group %>;
+package <%=group%>;
 
-import <%= group %>.domain.MusicReaderService;
-import <%= group %>.domain.port.HardcodedAdapter;
-import <%= group %>.domain.port.MusicReader;
+import <%=group%>.domain.MusicReaderService;
+import <%=group%>.domain.port.HardcodedAdapter;
+import <%=group%>.domain.port.MusicReader;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
