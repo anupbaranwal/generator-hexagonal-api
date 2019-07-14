@@ -18,6 +18,6 @@ If you want to generate your own spring boot application which works on hexagona
 - Make sure you have npm and node.js installed.
 - in command prompt (shell prompt) go to the directory where you want to generate the application.
 - Run `npm install -g yo` command to download yeoman scaffolding tool.
-- Run `npm install -g generator-hexagonal-api` command to download hexagonal spring boot app generator.
-- Once installation is complete use yeoman tool to scaffold your app using using generator-hexagonal-api, just run `yo hexagonal-api`
+- Run `npm install -g generator-hexagonal-app` command to download hexagonal spring boot app generator.
+- Once installation is complete use yeoman tool to scaffold your app using using generator-hexagonal-app, just run `yo hexagonal-app`
 - you application will be generated in no time.

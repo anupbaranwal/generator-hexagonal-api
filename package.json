@@ -1,5 +1,5 @@
 {
-  "name": "generator-hexagonal-api",
+  "name": "generator-hexagonal-app",
   "version": "0.0.1",
   "description": "yeoman generator for spring boot application with hexagonal architecture",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anupbaranwal/generator-hexagonal-api.git"
+    "url": "git+https://github.com/anupbaranwal/generator-hexagonal-app.git"
   },
   "keywords": [
     "yeoman-generator",
@@ -22,9 +22,9 @@
   "author": "Anup Kumar <talktoanupbaranwal@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/anupbaranwal/generator-hexagonal-api/issues"
+    "url": "https://github.com/anupbaranwal/generator-hexagonal-app/issues"
   },
-  "homepage": "https://github.com/anupbaranwal/generator-hexagonal-api#readme",
+  "homepage": "https://github.com/anupbaranwal/generator-hexagonal-app#readme",
   "dependencies": {
     "decamelize": "^3.2.0",
     "uppercamelcase": "^3.0.0",
