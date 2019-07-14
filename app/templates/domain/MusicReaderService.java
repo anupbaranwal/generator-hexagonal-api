@@ -1,19 +1,19 @@
 package <%=group%>.domain;
 
-import <%=group%>.domain.port.HardcodedAdapter;
+import <%=group%>.domain.port.MusicRepository;
 import <%=group%>.domain.port.MusicReader;
 import java.util.List;
 
 public class MusicReaderService implements MusicReader {
 
-  private HardcodedAdapter hardcodedAdapter;
+  private MusicRepository musicRepository;
 
-  public MusicReaderService(HardcodedAdapter hardcodedAdapter) {
-    this.hardcodedAdapter = hardcodedAdapter;
+  public MusicReaderService(MusicRepository musicRepository) {
+    this.musicRepository = musicRepository;
   }
 
   @Override
   public List<String> readMusic() {
-    return hardcodedAdapter.getListOfMusic();
+    return musicRepository.getListOfMusic();
   }
 }

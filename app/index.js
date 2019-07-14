@@ -39,7 +39,9 @@ module.exports = class extends Generator {
         var artifactId    = answers.artifact;
         var groupId 	= answers.group;
         var appTitle        = answers.appname;
-        var appName         = answers.appname.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }).split(' ').join('');
+        var appNameSuffix = answers.appname.split(' ').indexOf('App') > 0
+                        || answers.appname.split(' ').indexOf('Application') > 0? "": "Application";
+        var appName         = answers.appname.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }).split(' ').join('')+appNameSuffix;
         var packagePath   = answers.group.split('.').join('/');
 
         // root files
@@ -52,7 +54,7 @@ module.exports = class extends Generator {
             {
                 artifact	: artifactId,
                 group		: groupId,
-                appname		: appName,
+                appname		: appTitle,
             }
         );
         // bootstrap module generation
@@ -113,8 +115,8 @@ module.exports = class extends Generator {
             }
         );
         this.fs.copyTpl(
-            this.templatePath('domain/HardcodedAdapter.java'),
-            this.destinationPath('HardcodedAdapter.java'),
+            this.templatePath('domain/MusicRepository.java'),
+            this.destinationPath('MusicRepository.java'),
             {
                 group		: groupId,
             }
@@ -157,8 +159,8 @@ module.exports = class extends Generator {
         this.destinationRoot('./java');
         this.destinationRoot(packagePath+'/infra')
         this.fs.copyTpl(
-            this.templatePath('adapter/HardcodedMusicAdapter.java'),
-            this.destinationPath('HardcodedMusicAdapter.java'),
+            this.templatePath('adapter/HardcodedMusicRepository.java'),
+            this.destinationPath('HardcodedMusicRepository.java'),
             {
                 group		: groupId,
             }

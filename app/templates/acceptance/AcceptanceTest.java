@@ -1,7 +1,7 @@
 package <%=group%>;
 
 import <%=group%>.domain.MusicReaderService;
-import <%=group%>.domain.port.HardcodedAdapter;
+import <%=group%>.domain.port.MusicRepository;
 import <%=group%>.domain.port.MusicReader;
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +17,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class AcceptanceTest {
 
   @Mock
-  private HardcodedAdapter hardcodedAdapter;
+  private MusicRepository musicRepository;
 
   private MusicReader musicReader;
 
   @Before
   public void setUp() {
-    musicReader = new MusicReaderService(hardcodedAdapter);
+    musicReader = new MusicReaderService(musicRepository);
   }
 
   @Test
@@ -33,7 +33,7 @@ public class AcceptanceTest {
         "et up, stand up, stand up for your rights / Get up, stand up, don’t give up the fight!");
 
     //Given
-    Mockito.when(hardcodedAdapter.getListOfMusic()).thenReturn(expectedListOfMusic);
+    Mockito.when(musicRepository.getListOfMusic()).thenReturn(expectedListOfMusic);
 
     //When
     List<String> musics = musicReader.readMusic();

@@ -1,10 +1,10 @@
 package <%=group%>.infra;
 
-import <%=group%>.domain.port.HardcodedAdapter;
+import <%=group%>.domain.port.MusicRepository;
 import java.util.Arrays;
 import java.util.List;
 
-public class HardcodedMusicAdapter implements HardcodedAdapter {
+public class HardcodedMusicRepository implements MusicRepository {
 
   public List<String> getListOfMusic() {
     return Arrays.asList("I'll stop wearing black when they make a darker color",
