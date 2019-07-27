@@ -1,7 +1,8 @@
 package <%=group%>.domain.port;
 
+import <%=group%>.domain.model.MusicDto;
 import java.util.List;
 
 public interface MusicRepository {
-  List<String> getListOfMusic();
+  List<MusicDto> getListOfMusic();
 }

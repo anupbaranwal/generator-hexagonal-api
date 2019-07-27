@@ -2,6 +2,8 @@ package <%=group%>.domain;
 
 import <%=group%>.domain.port.MusicRepository;
 import <%=group%>.domain.port.MusicReader;
+import <%=group%>.domain.model.MusicDto;
+
 import java.util.List;
 
 public class MusicReaderService implements MusicReader {
@@ -13,7 +15,7 @@ public class MusicReaderService implements MusicReader {
   }
 
   @Override
-  public List<String> readMusic() {
+  public List<MusicDto> readMusic() {
     return musicRepository.getListOfMusic();
   }
 }

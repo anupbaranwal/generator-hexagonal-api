@@ -34,15 +34,24 @@ module.exports = class extends Generator {
             name 	: 'appname',
             default : 'Hexagonal Application',
             message : 'Type the application Title [Hexagonal Application]: '
+        },
+        {
+          type: 'confirm',
+          name: 'jpa',
+          message: 'Do you want to use database in your application?',
+          initial: false
         }
     ]).then((answers) => {
         var artifactId    = answers.artifact;
-        var groupId 	= answers.group;
-        var appTitle        = answers.appname;
-        var appNameSuffix = answers.appname.split(' ').indexOf('App') > 0
-                        || answers.appname.split(' ').indexOf('Application') > 0? "": "Application";
-        var appName         = answers.appname.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }).split(' ').join('')+appNameSuffix;
+        var groupId 	  = answers.group;
+        var appTitle      = answers.appname;
+        var appNameFragments =answers.appname.split(' ');
+        var appNameSuffix = appNameFragments.indexOf('App') > 0 || appNameFragments.indexOf('app') > 0
+                        || appNameFragments.indexOf('Application') > 0 || appNameFragments.indexOf('application') > 0
+                        ? "": "Application";
+        var appName       = answers.appname.replace(/\w\S*/g, function(txt){ return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); }).split(' ').join('')+appNameSuffix;
         var packagePath   = answers.group.split('.').join('/');
+        var jpaSupport = answers.jpa;
 
         // root files
         this.destinationRoot(artifactId);
@@ -55,6 +64,7 @@ module.exports = class extends Generator {
                 artifact	: artifactId,
                 group		: groupId,
                 appname		: appTitle,
+                jpaSupport : jpaSupport
             }
         );
         // bootstrap module generation
@@ -66,6 +76,7 @@ module.exports = class extends Generator {
                 artifact	: artifactId,
                 group		: groupId,
                 appname		: appName,
+                jpaSupport : jpaSupport
             }
         );
         this.destinationRoot('./src/main');
@@ -81,12 +92,49 @@ module.exports = class extends Generator {
             this.destinationPath(appName+'.java'),
             {
                 group		: groupId,
-                appname		: appName,
+                appname		: appName
+            }
+        );
+
+        // contract domain code generation
+        this.destinationRoot('../../../../../../../contract-domain');
+        this.fs.copyTpl(
+            this.templatePath('contract/pom.xml'),
+            this.destinationPath('pom.xml'),
+            {
+                artifact	: artifactId,
+                group		: groupId
+            }
+        );
+        this.destinationRoot('./src/main');
+        this.destinationRoot('./java');
+        this.destinationRoot(packagePath+'/domain')
+        this.destinationRoot('./port');
+        this.fs.copyTpl(
+            this.templatePath('contract/MusicReader.java'),
+            this.destinationPath('MusicReader.java'),
+            {
+                group		: groupId,
+            }
+        );
+        this.fs.copyTpl(
+            this.templatePath('contract/MusicRepository.java'),
+            this.destinationPath('MusicRepository.java'),
+            {
+                group		: groupId,
+            }
+        );
+        this.destinationRoot('../model');
+        this.fs.copyTpl(
+            this.templatePath('contract/MusicDto.java'),
+            this.destinationPath('MusicDto.java'),
+            {
+                group		: groupId,
             }
         );
 
         // domain code generation
-        this.destinationRoot('../../../../../../../domain');
+        this.destinationRoot('../../../../../../../../../domain');
         this.fs.copyTpl(
             this.templatePath('domain/pom.xml'),
             this.destinationPath('pom.xml'),
@@ -106,24 +154,9 @@ module.exports = class extends Generator {
                 group		: groupId,
             }
         );
-        this.destinationRoot('./port');
-        this.fs.copyTpl(
-            this.templatePath('domain/MusicReader.java'),
-            this.destinationPath('MusicReader.java'),
-            {
-                group		: groupId,
-            }
-        );
-        this.fs.copyTpl(
-            this.templatePath('domain/MusicRepository.java'),
-            this.destinationPath('MusicRepository.java'),
-            {
-                group		: groupId,
-            }
-        );
 
         // acceptance test generation
-        this.destinationRoot('../../../../../../../../../acceptance-test');
+        this.destinationRoot('../../../../../../../../acceptance-test');
         this.fs.copyTpl(
             this.templatePath('acceptance/pom.xml'),
             this.destinationPath('pom.xml'),
@@ -144,27 +177,89 @@ module.exports = class extends Generator {
             }
         );
 
-        // Hardcoded adapter code generation
-        this.destinationRoot('../../../../../../../hardcoded-adapter');
-        this.fs.copyTpl(
-            this.templatePath('adapter/pom.xml'),
-            this.destinationPath('pom.xml'),
-            {
-                artifact	: artifactId,
-                group		: groupId,
-                appname		: appName,
-            }
-        );
-        this.destinationRoot('./src/main');
-        this.destinationRoot('./java');
-        this.destinationRoot(packagePath+'/infra')
-        this.fs.copyTpl(
-            this.templatePath('adapter/HardcodedMusicRepository.java'),
-            this.destinationPath('HardcodedMusicRepository.java'),
-            {
-                group		: groupId,
-            }
-        );
+        if(jpaSupport) {
+            // JPA adapter code generation
+            this.destinationRoot('../../../../../../../jpa-adapter');
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/pom.xml'),
+                this.destinationPath('pom.xml'),
+                {
+                    artifact	: artifactId,
+                    group		: groupId,
+                    appname		: appName,
+                }
+            );
+            this.destinationRoot('./src/main');
+            this.destinationRoot('./java');
+            this.destinationRoot(packagePath+'/infra')
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/RealTimeMusicRepository.java'),
+                this.destinationPath('RealTimeMusicRepository.java'),
+                {
+                    group		: groupId,
+                }
+            );
+            this.destinationRoot('config');
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/JpaAdapterConfig.java'),
+                this.destinationPath('JpaAdapterConfig.java'),
+                {
+                    group		: groupId,
+                }
+            );
+            this.destinationRoot('../dao');
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/MusicDao.java'),
+                this.destinationPath('MusicDao.java'),
+                {
+                    group		: groupId,
+                }
+            );
+            this.destinationRoot('../entity');
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/Music.java'),
+                this.destinationPath('Music.java'),
+                {
+                    group		: groupId,
+                }
+            );
+            this.destinationRoot('../../../../../../resources');
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/application.yml'),
+                this.destinationPath('application.yml'),
+                {
+                    group		: groupId,
+                }
+            );
+            this.fs.copyTpl(
+                this.templatePath('jpaadapter/data.sql'),
+                this.destinationPath('data.sql'),
+                {}
+            );
+        } else {
+            // Hardcoded adapter code generation
+            this.destinationRoot('../../../../../../../hardcoded-adapter');
+            this.fs.copyTpl(
+                this.templatePath('hardcodedadapter/pom.xml'),
+                this.destinationPath('pom.xml'),
+                {
+                    artifact	: artifactId,
+                    group		: groupId,
+                    appname		: appName,
+                }
+            );
+            this.destinationRoot('./src/main');
+            this.destinationRoot('./java');
+            this.destinationRoot(packagePath+'/infra')
+            this.fs.copyTpl(
+                this.templatePath('hardcodedadapter/HardcodedMusicRepository.java'),
+                this.destinationPath('HardcodedMusicRepository.java'),
+                {
+                    group		: groupId,
+                }
+            );
+
+        }
      });
   }
 };
