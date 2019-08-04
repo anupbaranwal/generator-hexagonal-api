@@ -13,7 +13,8 @@
         <module>domain</module>
         <module>contract-domain</module>
         <module>acceptance-test</module>
-        <% if(jpaSupport){%><module>jpa-adapter</module><%} else {%><module>hardcoded-adapter</module><%}%>
+        <module>rest-adapter</module>
+        <module><% if(jpaSupport){%>jpa-adapter<%} else {%>hardcoded-adapter<%}%></module>
     </modules>
     <properties>
         <h2-version>1.4.199</h2-version>

@@ -95,9 +95,18 @@ module.exports = class extends Generator {
                 appname		: appName
             }
         );
+        this.destinationRoot('./config')
+        this.fs.copyTpl(
+            this.templatePath('bootstrap/BootstrapConfig.java'),
+            this.destinationPath('BootstrapConfig.java'),
+            {
+                group		: groupId,
+                jpaSupport		: jpaSupport
+            }
+        );
 
         // contract domain code generation
-        this.destinationRoot('../../../../../../../contract-domain');
+        this.destinationRoot('../../../../../../../../contract-domain');
         this.fs.copyTpl(
             this.templatePath('contract/pom.xml'),
             this.destinationPath('pom.xml'),
@@ -146,7 +155,7 @@ module.exports = class extends Generator {
         );
         this.destinationRoot('./src/main');
         this.destinationRoot('./java');
-        this.destinationRoot(packagePath+'/domain')
+        this.destinationRoot(packagePath+'/domain');
         this.fs.copyTpl(
             this.templatePath('domain/MusicReaderService.java'),
             this.destinationPath('MusicReaderService.java'),
@@ -168,7 +177,7 @@ module.exports = class extends Generator {
         );
         this.destinationRoot('./src/test');
         this.destinationRoot('./java');
-        this.destinationRoot(packagePath)
+        this.destinationRoot(packagePath);
         this.fs.copyTpl(
             this.templatePath('acceptance/AcceptanceTest.java'),
             this.destinationPath('AcceptanceTest.java'),
@@ -176,10 +185,37 @@ module.exports = class extends Generator {
                 group		: groupId,
             }
         );
-
+        // Rest adapter code generation
+        this.destinationRoot('../../../../../../../rest-adapter');
+        this.fs.copyTpl(
+            this.templatePath('rest/pom.xml'),
+            this.destinationPath('pom.xml'),
+            {
+                artifact	: artifactId,
+                group		: groupId
+            }
+        );
+        this.destinationRoot('./src/main');
+        this.destinationRoot('./java');
+        this.destinationRoot(packagePath+'/rest')
+        this.fs.copyTpl(
+            this.templatePath('rest/MusicResource.java'),
+            this.destinationPath('MusicResource.java'),
+            {
+                group		: groupId,
+            }
+        );
+        this.destinationRoot('./config')
+        this.fs.copyTpl(
+            this.templatePath('rest/RestAdapterConfig.java'),
+            this.destinationPath('RestAdapterConfig.java'),
+            {
+                group		: groupId,
+            }
+        );
         if(jpaSupport) {
             // JPA adapter code generation
-            this.destinationRoot('../../../../../../../jpa-adapter');
+            this.destinationRoot('../../../../../../../../../jpa-adapter');
             this.fs.copyTpl(
                 this.templatePath('jpaadapter/pom.xml'),
                 this.destinationPath('pom.xml'),
@@ -226,19 +262,15 @@ module.exports = class extends Generator {
             this.destinationRoot('../../../../../../resources');
             this.fs.copyTpl(
                 this.templatePath('jpaadapter/application.yml'),
-                this.destinationPath('application.yml'),
-                {
-                    group		: groupId,
-                }
+                this.destinationPath('application.yml')
             );
             this.fs.copyTpl(
                 this.templatePath('jpaadapter/data.sql'),
-                this.destinationPath('data.sql'),
-                {}
+                this.destinationPath('data.sql')
             );
         } else {
             // Hardcoded adapter code generation
-            this.destinationRoot('../../../../../../../hardcoded-adapter');
+            this.destinationRoot('../../../../../../../../../hardcoded-adapter');
             this.fs.copyTpl(
                 this.templatePath('hardcodedadapter/pom.xml'),
                 this.destinationPath('pom.xml'),
@@ -258,7 +290,14 @@ module.exports = class extends Generator {
                     group		: groupId,
                 }
             );
-
+            this.destinationRoot('./config')
+            this.fs.copyTpl(
+                this.templatePath('hardcodedadapter/HardcodedAdapterConfig.java'),
+                this.destinationPath('HardcodedAdapterConfig.java'),
+                {
+                    group		: groupId,
+                }
+            );
         }
      });
   }

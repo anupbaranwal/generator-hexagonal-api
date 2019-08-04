@@ -13,13 +13,19 @@
   <dependencies>
     <dependency>
       <groupId><%=group%></groupId>
-      <% if(jpaSupport){%><artifactId>jpa-adapter</artifactId><%} else {%><artifactId>hardcoded-adapter</artifactId><%}%>
+      <artifactId><%if(jpaSupport){%>jpa-adapter<%} else {%>hardcoded-adapter<%}%></artifactId>
       <version>${project.parent.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId><%=group%></groupId>
       <artifactId>domain</artifactId>
+      <version>${project.parent.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId><%=group%></groupId>
+      <artifactId>rest-adapter</artifactId>
       <version>${project.parent.version}</version>
       <scope>compile</scope>
     </dependency>
