@@ -181,121 +181,120 @@ module.exports = class extends Generator {
       this.templatePath('jpaadapter/data.sql'),
       this.destinationPath('data.sql')
     );
-
   }
 
   _generateRestAdapter(artifactId, groupId, packagePath) {
     this.destinationRoot('../../../../../../../rest-adapter');
-      this.fs.copyTpl(
-        this.templatePath('rest/pom.xml'),
-        this.destinationPath('pom.xml'),
-        {
-          artifact	: artifactId,
-          group		: groupId
-        }
-      );
-      this.destinationRoot('./src/main');
-      this.destinationRoot('./java');
-      this.destinationRoot(packagePath+'/rest')
-      this.fs.copyTpl(
-        this.templatePath('rest/MusicResource.java'),
-        this.destinationPath('MusicResource.java'),
-        {
-          group		: groupId,
-        }
-      );
-      this.destinationRoot('./config')
-      this.fs.copyTpl(
-        this.templatePath('rest/RestAdapterConfig.java'),
-        this.destinationPath('RestAdapterConfig.java'),
-        {
-          group		: groupId,
-        }
-      );
+    this.fs.copyTpl(
+      this.templatePath('rest/pom.xml'),
+      this.destinationPath('pom.xml'),
+      {
+        artifact	: artifactId,
+        group		: groupId
+      }
+    );
+    this.destinationRoot('./src/main');
+    this.destinationRoot('./java');
+    this.destinationRoot(packagePath+'/rest')
+    this.fs.copyTpl(
+      this.templatePath('rest/MusicResource.java'),
+      this.destinationPath('MusicResource.java'),
+      {
+        group		: groupId,
+      }
+    );
+    this.destinationRoot('./config')
+    this.fs.copyTpl(
+      this.templatePath('rest/RestAdapterConfig.java'),
+      this.destinationPath('RestAdapterConfig.java'),
+      {
+        group		: groupId,
+      }
+    );
   }
 
   _generateDomain(artifactId, groupId, appName, packagePath) {
     this.destinationRoot('../../../../../../../../../domain');
       this.fs.copyTpl(
-        this.templatePath('domain/pom.xml'),
-        this.destinationPath('pom.xml'),
-        {
-          artifact	: artifactId,
-          group		: groupId,
-          appname		: appName,
-        }
-      );
-      this.destinationRoot('./src/main');
-      this.destinationRoot('./java');
-      this.destinationRoot(packagePath+'/domain');
-      this.fs.copyTpl(
-        this.templatePath('domain/MusicReaderService.java'),
-        this.destinationPath('MusicReaderService.java'),
-        {
-          group		: groupId,
-        }
-      );
+      this.templatePath('domain/pom.xml'),
+      this.destinationPath('pom.xml'),
+      {
+        artifact	: artifactId,
+        group		: groupId,
+        appname		: appName,
+      }
+    );
+    this.destinationRoot('./src/main');
+    this.destinationRoot('./java');
+    this.destinationRoot(packagePath+'/domain');
+    this.fs.copyTpl(
+      this.templatePath('domain/MusicReaderService.java'),
+      this.destinationPath('MusicReaderService.java'),
+      {
+        group		: groupId,
+      }
+    );
   }
 
   _generateContractDomain(artifactId, groupId, packagePath) {
     this.destinationRoot('../../../../../../../../contract-domain');
-      this.fs.copyTpl(
-        this.templatePath('contract/pom.xml'),
-        this.destinationPath('pom.xml'),
-        {
-          artifact	: artifactId,
-          group		: groupId
-        }
-      );
-      this.destinationRoot('./src/main');
-      this.destinationRoot('./java');
-      this.destinationRoot(packagePath+'/domain')
-      this.destinationRoot('./port');
-      this.fs.copyTpl(
-        this.templatePath('contract/MusicReader.java'),
-        this.destinationPath('MusicReader.java'),
-        {
-          group		: groupId,
-        }
-      );
-      this.fs.copyTpl(
-        this.templatePath('contract/MusicRepository.java'),
-        this.destinationPath('MusicRepository.java'),
-        {
-          group		: groupId,
-        }
-      );
-      this.destinationRoot('../model');
-      this.fs.copyTpl(
-        this.templatePath('contract/MusicDto.java'),
-        this.destinationPath('MusicDto.java'),
-        {
-          group		: groupId,
-        }
-      );
+    this.fs.copyTpl(
+      this.templatePath('contract/pom.xml'),
+      this.destinationPath('pom.xml'),
+      {
+        artifact	: artifactId,
+        group		: groupId
+      }
+    );
+    this.destinationRoot('./src/main');
+    this.destinationRoot('./java');
+    this.destinationRoot(packagePath+'/domain')
+    this.destinationRoot('./port');
+    this.fs.copyTpl(
+      this.templatePath('contract/MusicReader.java'),
+      this.destinationPath('MusicReader.java'),
+      {
+        group		: groupId,
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('contract/MusicRepository.java'),
+      this.destinationPath('MusicRepository.java'),
+      {
+        group		: groupId,
+      }
+    );
+    this.destinationRoot('../model');
+    this.fs.copyTpl(
+      this.templatePath('contract/MusicDto.java'),
+      this.destinationPath('MusicDto.java'),
+      {
+        group		: groupId,
+      }
+    );
   }
 
   _generateAcceptanceTest(artifactId, groupId, appName, packagePath) {
     this.destinationRoot('../../../../../../../../acceptance-test');
-      this.fs.copyTpl(
-        this.templatePath('acceptance/pom.xml'),
-        this.destinationPath('pom.xml'),
-        {
-          artifact	: artifactId,
-          group		: groupId,
-          appname		: appName,
-        }
-      );
-      this.destinationRoot('./src/test');
-      this.destinationRoot('./java');
-      this.destinationRoot(packagePath);
-      this.fs.copyTpl(
-        this.templatePath('acceptance/AcceptanceTest.java'),
-        this.destinationPath('AcceptanceTest.java'),
-        {
-          group		: groupId,
-        }
-        );
+    this.fs.copyTpl(
+      this.templatePath('acceptance/pom.xml'),
+      this.destinationPath('pom.xml'),
+      {
+        artifact	: artifactId,
+        group		: groupId,
+        appname		: appName,
+      }
+    );
+    this.destinationRoot('./src/test');
+    this.destinationRoot('./java');
+    this.destinationRoot(packagePath);
+    this.fs.copyTpl(
+      this.templatePath('acceptance/AcceptanceTest.java'),
+      this.destinationPath('AcceptanceTest.java'),
+      {
+        group		: groupId,
+      }
+    );
   }
 
   _generateBootstrap(artifactId, groupId, appName, jpaSupport, packagePath) {
